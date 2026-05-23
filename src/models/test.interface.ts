@@ -4,4 +4,5 @@ export interface Test {
     name: string,
     email: string,
     password: string
+    role?: string
 }

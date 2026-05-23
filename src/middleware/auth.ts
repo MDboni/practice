@@ -26,7 +26,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     
     const user = userData.rows[0]
 
-    if (!userData.rows.length) {
+    if (!userData?.rows.length) {
         return res.status(401).json({
             success: false,
             message: "Unauthorized"

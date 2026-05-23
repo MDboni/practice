@@ -12,10 +12,12 @@ const loginController = async (req: Request, res: Response) => {
             data: result
         })
     }catch(error : any) {
-        res.status(500).json({
+        const message = error instanceof Error ? error.message : 'Error occurred while logging in'
+        const status = message === 'User not found' || message === 'Invalid password' ? 401 : 500
+
+        res.status(status).json({
             success: false,
-            message: 'Error occurred while logging in',
-            error
+            message,
         })
     }
 }

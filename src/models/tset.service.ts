@@ -4,14 +4,15 @@ import bcrypt from "bcrypt";
 
 
 const testCreateService = async (payload: Test) => {
-    const { name, email, password } = payload
+    const { name, email, password , role } = payload
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const testQuery =await  pool.query(`
-        INSERT INTO test_table (name, email, password)
-        VALUES ($1, $2, $3)
+        INSERT INTO test_table (name, email, password, role)
+        VALUES ($1, $2, $3, COALESCE($4, 'user'))
         RETURNING *
-    `, [name, email, hashedPassword])
+    `, [name, email, hashedPassword, role])
+
     delete testQuery.rows[0].password
     return testQuery
 }
@@ -29,13 +30,13 @@ const singledataService = async (id: string) => {
     return testQuery
 }
 const updatedataService = async (id: string, payload: Partial<Test>) => {
-    const { name, email, password } = payload
+    const { name, email, password, role } = payload
     const testQuery = await pool.query(`
         UPDATE test_table
-        SET name = $1, email = $2, password = $3
-        WHERE id = $4
+        SET name = $1, email = $2, password = $3, role = COALESCE($4, role)
+        WHERE id = $5
         RETURNING *
-    `, [name, email, password, id])
+    `, [name, email, password, role, id])
     return testQuery
 }
 const deletedataService = async (id: string) => {
