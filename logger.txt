@@ -63,3 +63,9 @@ Method -> POST - Time -> 1779531925294 - URL -> /api/test
 Method -> POST - Time -> 1779532097747 - URL -> /api/auth/login
 
 Method -> POST - Time -> 1779532145591 - URL -> /api/auth/login
+
+Method -> GET - Time -> 1779533235638 - URL -> /api/test
+
+Method -> POST - Time -> 1779533254995 - URL -> /api/test
+
+Method -> GET - Time -> 1779533262702 - URL -> /api/test

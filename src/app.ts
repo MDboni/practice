@@ -10,7 +10,7 @@ app.use(logger);
 
 
 
-app.use('/api/test', auth, TestTableRoutes)
+app.use('/api/test',  TestTableRoutes)
 app.use("/api/auth", AuthRoutes)
 
 export default app
