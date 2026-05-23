@@ -1,6 +1,5 @@
 import type { Test } from "./test.interface"
 import { pool } from "../db/database"
-import type { Response } from "express"
 import bcrypt from "bcrypt";
 
 
