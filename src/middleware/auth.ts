@@ -5,9 +5,9 @@ import { pool } from "../db/database";
 
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
-  console.log("auth middleware")
-  console.log(req.headers.authorization)
-  const token = req.headers.authorization
+  
+ try{
+     const token = req.headers.authorization
     if(!token) {
         return res.status(401).json({
             success: false, 
@@ -20,7 +20,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     console.log(decode)
 
     const userData = await pool.query(`
-        SELECT * FROM test_table WHERE id = $1
+        SELECT * FROM test_table WHERE email = $1
     `, [decode.email])
 
     
@@ -32,8 +32,13 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
             message: "Unauthorized"
         })
     }
+
+    req.user = decode;
     
     next();
+ }catch(error ) {
+    next(error)
+ }
 };
 
 export default auth; 

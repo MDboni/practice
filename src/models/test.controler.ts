@@ -22,6 +22,7 @@ const createTestTableController = async (req: Request, res: Response) => {
 
 const allTestTableController = async (req: Request, res: Response) => {
     try{
+        console.log("allTestTableController", req.user)
         const result = await TestTableService.alldataService()
         res.status(200).json({
             success: true,
