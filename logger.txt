@@ -35,3 +35,9 @@ Method -> GET - Time -> 1779512992891 - URL -> /api/test
 Method -> GET - Time -> 1779512997236 - URL -> /api/test
 
 Method -> GET - Time -> 1779513477227 - URL -> /api/test
+
+Method -> GET - Time -> 1779514410380 - URL -> /api/test
+
+Method -> POST - Time -> 1779514825030 - URL -> /api/auth/login
+
+Method -> GET - Time -> 1779514851910 - URL -> /api/test/4

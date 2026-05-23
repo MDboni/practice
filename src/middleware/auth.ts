@@ -1,15 +1,39 @@
 import express, { type NextFunction, type Request, type Response } from "express"
+import jwt, { type JwtPayload } from "jsonwebtoken";
+import config from "../config/config";
+import { pool } from "../db/database";
 
-const auth =((req:Request, res:Response, next:NextFunction) => {
+
+const auth = async (req: Request, res: Response, next: NextFunction) => {
   console.log("auth middleware")
   console.log(req.headers.authorization)
   const token = req.headers.authorization
     if(!token) {
-        return res.status(401).json({ message: "Unauthorized" })
+        return res.status(401).json({
+            success: false, 
+            message: "Unauthorized" 
+        })
     }
 
-    console.log(token)
-  next();
-});
+    const decode = jwt.verify(token as string, config.jwtSecretKey as string) as JwtPayload ;
 
-export default auth;
+    console.log(decode)
+
+    const userData = await pool.query(`
+        SELECT * FROM test_table WHERE id = $1
+    `, [decode.email])
+
+    
+    const user = userData.rows[0]
+
+    if (!userData.rows.length) {
+        return res.status(401).json({
+            success: false,
+            message: "Unauthorized"
+        })
+    }
+    
+    next();
+};
+
+export default auth; 
